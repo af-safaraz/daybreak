@@ -2,7 +2,6 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,7 +12,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
-import NewsCard from "../ui/NewsCard";
+import NewsCard from "../ui/NewsCardBackup";
 
 const LargeWidget = () => {
   return (

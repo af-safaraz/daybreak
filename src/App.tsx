@@ -1,7 +1,7 @@
 import Background from "./components/layouts/Background";
 import Header from "./components/layouts/Header";
 import Hero from "./components/layouts/Hero";
-import LargeWidget from "./components/layouts/LargeWidget";
+import NewsWidget from "./components/widgets/NewsWidget";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <LargeWidget></LargeWidget>
+        <NewsWidget />
       </main>
     </>
   );
