@@ -3,5 +3,5 @@ export const fetchNews = async () => {
     "https://api-berita-indonesia.vercel.app/cnn/terbaru"
   );
   if (!res.ok) throw new Error("Failed to fetch news.");
-  return res.json();
+  return await res.json();
 };

@@ -22,7 +22,7 @@ type WidgetContainerProps = {
 const WidgetContainer = ({ title, children }: WidgetContainerProps) => {
   return (
     <>
-      <div className="w-full xl:w-7xl m-auto px-8 py-5">
+      <div className="w-full">
         <Card className="gap-4">
           <CardHeader className="flex items-center justify-between">
             <CardTitle className="text-2xl">{title}</CardTitle>

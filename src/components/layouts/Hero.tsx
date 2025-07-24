@@ -28,7 +28,7 @@ const Hero = () => {
 
   return (
     <>
-      <div className="w-full xl:w-7xl mx-auto mt-8 px-8 flex justify-between items-center">
+      <div className="w-full mt-8 flex justify-between items-center">
         <h1 className="tracking-normal">{greeting}</h1>
         <div className="flex flex-col justify-center items-end text-right">
           <h4 className="font-semibold">{dayjs(dateTime).format("hh:mm A")}</h4>
