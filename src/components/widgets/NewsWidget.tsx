@@ -31,31 +31,39 @@ const NewsWidget = () => {
   return (
     <>
       <WidgetContainer title="News">
-        <div className="relative">
-          <div
-            className="flex flex-nowrap overflow-x-auto gap-4 scroll-smooth"
-            ref={newsContainerRef}
-          >
-            {isLoading
-              ? Array.from({ length: 5 }).map((_, i) => (
-                  <NewsCard key={i} news={null} />
-                ))
-              : visiblePosts.map((news: any, index: number) => (
-                  <NewsCard key={index} news={news} />
-                ))}
-            {visibleCount < (allPosts?.data?.posts?.length ?? 0) && (
-              <div className="min-w-[200px] h-[320px] flex justify-center items-center">
-                <Button
-                  onClick={() => setVisibleCount((prev) => prev + 10)}
-                  variant="outline"
-                >
-                  Load More
-                </Button>
-              </div>
-            )}
+        {error ? (
+          <h5 className="font-normal">
+            {error.message
+              ? `Sorry we are having trouble fetching news. Error details: ${error.message}`
+              : "An error occurred while fetching news."}
+          </h5>
+        ) : (
+          <div className="relative">
+            <div
+              className="flex flex-nowrap overflow-x-auto gap-4 scroll-smooth"
+              ref={newsContainerRef}
+            >
+              {isLoading
+                ? Array.from({ length: 5 }).map((_, i) => (
+                    <NewsCard key={i} news={null} />
+                  ))
+                : visiblePosts.map((news: any, index: number) => (
+                    <NewsCard key={index} news={news} />
+                  ))}
+              {visibleCount < (allPosts?.data?.posts?.length ?? 0) && (
+                <div className="min-w-[200px] h-[320px] flex justify-center items-center">
+                  <Button
+                    onClick={() => setVisibleCount((prev) => prev + 10)}
+                    variant="outline"
+                  >
+                    Load More
+                  </Button>
+                </div>
+              )}
+            </div>
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-16 backdrop-blur-xs mask-l-from-50% bg-linear-to-l from-white from-20% to-transparent" />
           </div>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-16 backdrop-blur-xs mask-l-from-50% bg-linear-to-l from-white from-20% to-transparent" />
-        </div>
+        )}
         <div className="mt-4 flex gap-2 justify-end">
           <Tooltip>
             <TooltipTrigger asChild>

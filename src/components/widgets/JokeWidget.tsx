@@ -23,13 +23,17 @@ const JokeWidget = () => {
           ) : (
             data?.map((joke, index) => (
               <h4 key={index} className="font-normal leading-loose">
-                {`"${joke}"`}
+                {joke.trim().startsWith('"') ? joke : `"${joke}"`}
               </h4>
             ))
           )}
           {error && (
             <div>
-              <h4 className="font-normal leading-loose">{error.message}</h4>
+              <h4 className="font-normal leading-loose text-gray-600">
+                "We looked for a joke. All we found was disappointment. Maybe
+                try again later." <br />
+                Error details: {error.message}
+              </h4>
             </div>
           )}
         </div>

@@ -6,5 +6,7 @@ export const useNews = () => {
     queryKey: ["news"],
     queryFn: fetchNews,
     refetchOnWindowFocus: false,
+    staleTime: 0,
+    retry: 1,
   });
 };

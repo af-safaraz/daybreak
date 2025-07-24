@@ -6,5 +6,7 @@ export const useJoke = () => {
     queryKey: ["joke"],
     queryFn: fetchJoke,
     refetchOnWindowFocus: false,
+    staleTime: 0,
+    retry: 1,
   });
 };
