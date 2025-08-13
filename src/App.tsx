@@ -1,22 +1,17 @@
-import Background from "./components/layouts/Background";
-import Header from "./components/layouts/Header";
-import Hero from "./components/layouts/Hero";
-import JokeWidget from "./components/widgets/JokeWidget";
-import NewsWidget from "./components/widgets/NewsWidget";
+import { Routes, Route, Navigate } from "react-router";
+
+import SignInPage from "@/pages/SignInPage";
+import SignUpPage from "@/pages/SignUpPage";
+import DashboardPage from "@/pages/DashboardPage";
 
 function App() {
   return (
-    <>
-      <Background />
-      <Header />
-      <main className="w-full xl:w-7xl m-auto px-8">
-        <Hero />
-        <div className="w-full flex flex-col my-5 gap-4">
-          <NewsWidget />
-          <JokeWidget />
-        </div>
-      </main>
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<SignInPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+    </Routes>
   );
 }
 

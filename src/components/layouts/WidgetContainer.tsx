@@ -22,8 +22,8 @@ type WidgetContainerProps = {
 const WidgetContainer = ({ title, children }: WidgetContainerProps) => {
   return (
     <>
-      <div className="w-full">
-        <Card className="gap-4">
+      <div className="w-full h-full">
+        <Card className="gap-4 w-full h-full">
           <CardHeader className="flex items-center justify-between">
             <CardTitle className="text-2xl">{title}</CardTitle>
             <CardAction>
@@ -43,7 +43,9 @@ const WidgetContainer = ({ title, children }: WidgetContainerProps) => {
               </DropdownMenu>
             </CardAction>
           </CardHeader>
-          <CardContent>{children}</CardContent>
+          <CardContent className="h-full flex flex-col justify-between">
+            {children}
+          </CardContent>
         </Card>
       </div>
     </>

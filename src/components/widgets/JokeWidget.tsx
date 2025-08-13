@@ -53,7 +53,7 @@ const JokeWidget = () => {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p className="text-xs">Refresh News</p>
+              <p className="text-xs">Refresh Jokes</p>
             </TooltipContent>
           </Tooltip>
         </div>
