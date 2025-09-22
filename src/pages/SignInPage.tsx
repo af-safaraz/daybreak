@@ -1,8 +1,21 @@
 import SignInForm from "@/components/forms/SignInForm";
 import Background from "@/components/layouts/Background";
 import daybreakLogo from "@/assets/DaybreakLogo.svg";
+import LoadingPage from "./LoadingPage";
+import { useAuth } from "@/hooks/useAuth";
+import { Navigate } from "react-router";
 
 const SignInPage = () => {
+  const { currentUser, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingPage />;
+  }
+
+  if (currentUser) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <>
       <Background />

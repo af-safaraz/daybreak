@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { useAuth } from "@/hooks/useAuth";
 
 const Hero = () => {
   const [dateTime, setDateTime] = useState<Date>(new Date());
   const [greeting, setGreeting] = useState<string>("Hello");
+
+  const { profile } = useAuth();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -13,13 +16,13 @@ const Hero = () => {
       const hour = now.getHours();
 
       if (hour >= 5 && hour < 12) {
-        setGreeting("Good Morning, Fikri ☀️");
+        setGreeting(`Good Morning, ${profile?.name} ☀️`);
       } else if (hour >= 12 && hour < 16) {
-        setGreeting("Good Afternoon, Fikri ⛅️");
+        setGreeting(`Good Afternoon, ${profile?.name} ⛅️`);
       } else if (hour >= 16 || hour < 5) {
-        setGreeting("Good Evening, Fikri 🌙");
+        setGreeting(`Good Evening, ${profile?.name} 🌙`);
       } else {
-        setGreeting("Hello, Fikri 👋");
+        setGreeting(`Hello, ${profile?.name} 👋`);
       }
     }, 1000);
 
