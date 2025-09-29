@@ -3,7 +3,8 @@ import type { User } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/firebase/firebase";
 import { AuthContext } from "@/contexts/authContext";
-import { doc, getDoc } from "@firebase/firestore";
+import { doc, getDoc, setDoc } from "@firebase/firestore";
+import { isAuthChangeSuppressed } from "@/services/auth";
 
 export interface UserProfile {
   uid: string;
@@ -20,15 +21,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      // isAuthChangeSuppressed used to make sure currentUser and profile is null so the user will not be logged in after register
+      if (isAuthChangeSuppressed()) {
+        return;
+      }
       setCurrentUser(user);
       if (user) {
-        const docSnap = await getDoc(doc(db, "users", user.uid));
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setProfile(docSnap.data() as UserProfile);
         } else {
-          setProfile(null);
+          // If user data not exist create new profile and set it
+          const newProfile: UserProfile = {
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName,
+          };
+          setProfile(newProfile);
+
+          // Then add new user data to database
+          await setDoc(docRef, {
+            ...newProfile,
+            createdAt: new Date(),
+          });
         }
+      } else {
+        setProfile(null);
       }
+
       setLoading(false);
     });
     return () => unsubscribe();

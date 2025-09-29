@@ -13,11 +13,17 @@ import { auth, googleProvider, db } from "@/firebase/firebase";
 
 import { doc, setDoc } from "firebase/firestore";
 
+let suppressAuthChange = false;
+// SuppressAuthChange used so the user not automatically login after register
+export const isAuthChangeSuppressed = () => suppressAuthChange;
+
 export const register = async (
   email: string,
   password: string,
   name: string
 ) => {
+  suppressAuthChange = true;
+
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -34,15 +40,24 @@ export const register = async (
     createdAt: new Date(),
   });
 
+  await signOut(auth);
+  suppressAuthChange = false;
+
   return userCredential;
 };
 
-export const login = (email: string, password: string) => {
-  return signInWithEmailAndPassword(auth, email, password);
+export const login = async (email: string, password: string) => {
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+  return userCredential;
 };
 
-export const loginWithGoogle = () => {
-  return signInWithPopup(auth, googleProvider);
+export const loginWithGoogle = async () => {
+  const userCredential = await signInWithPopup(auth, googleProvider);
+  return userCredential;
 };
 
 export const logout = () => {

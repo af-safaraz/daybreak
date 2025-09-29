@@ -41,11 +41,13 @@ const SignInForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     try {
       setIsLoggingIn(true);
       await login(email, password);
+      toast.dismiss();
     } catch (error) {
       let errorMessage = "Something went wrong. Please try again.";
       if (error instanceof FirebaseError) {
         errorMessage = firebaseErrorMessages[error.code] || errorMessage;
       }
+      toast.dismiss();
       toast.error("Login failed", {
         id: "login-toast",
         description: errorMessage,
@@ -79,6 +81,7 @@ const SignInForm = ({ className, ...props }: React.ComponentProps<"div">) => {
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button
+                  type="button"
                   variant="outline"
                   className="w-full cursor-pointer"
                   onClick={handleLoginWithGoogle}

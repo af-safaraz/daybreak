@@ -15,6 +15,7 @@ import { useState } from "react";
 import { register } from "@/services/auth";
 import { FirebaseError } from "firebase/app";
 import { firebaseErrorMessages } from "@/firebase/firebaseErrorMessages";
+import { useToastStore } from "@/stores/useToastStore";
 
 const SignUpForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const navigate = useNavigate();
@@ -24,12 +25,21 @@ const SignUpForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const [password, setPassword] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
 
+  const { notify } = useToastStore();
+
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setIsSigningUp(true);
       await register(email, password, name);
-      navigate("/login", { state: { signupSuccess: true } });
+      toast.dismiss();
+      notify(
+        "success",
+        "Account created",
+        "You can now log in with your credentials."
+      );
+      navigate("/login");
+      // navigate("/login", { state: { signupSuccess: true } });
     } catch (error) {
       let errorMessage = "Something went wrong. Please try again.";
       console.error(error);
@@ -38,7 +48,7 @@ const SignUpForm = ({ className, ...props }: React.ComponentProps<"div">) => {
       }
       toast.error("Sign up failed", {
         description: errorMessage,
-        duration: Infinity,
+        duration: 8000,
       });
       setIsSigningUp(false);
     }

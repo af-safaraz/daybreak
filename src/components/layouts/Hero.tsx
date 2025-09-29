@@ -27,7 +27,7 @@ const Hero = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [profile]);
 
   return (
     <>
