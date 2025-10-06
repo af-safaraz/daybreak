@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNews } from "@/api/news";
+import { fetchNews, type NewsItem } from "@/api/news";
 
 export const useNews = () => {
-  return useQuery({
+  return useQuery<NewsItem[]>({
     queryKey: ["news"],
     queryFn: fetchNews,
     refetchOnWindowFocus: false,

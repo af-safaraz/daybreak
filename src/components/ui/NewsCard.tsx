@@ -1,12 +1,6 @@
+import type { NewsItem } from "@/api/news";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import dayjs from "dayjs";
-
-type NewsItem = {
-  title: string;
-  thumbnail: string;
-  link: string;
-  pubDate: string;
-};
 
 const NewsCard = ({ news }: { news: NewsItem | null }) => {
   return (

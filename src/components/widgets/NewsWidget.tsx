@@ -11,13 +11,14 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import { useNews } from "@/hooks/useNews";
 import { useState, useRef } from "react";
+import type { NewsItem } from "@/api/news";
 
 const NewsWidget = () => {
-  const { data: allPosts, isLoading, isFetching, error, refetch } = useNews();
+  const { data, isLoading, isFetching, error, refetch } = useNews();
   const [visibleCount, setVisibleCount] = useState(10);
   const newsContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const visiblePosts = allPosts?.data?.posts?.slice(0, visibleCount) ?? [];
+  const visiblePosts = data?.slice(0, visibleCount) ?? [];
 
   const scroll = (direction: "left" | "right") => {
     if (newsContainerRef.current) {
@@ -47,10 +48,10 @@ const NewsWidget = () => {
                 ? Array.from({ length: 5 }).map((_, i) => (
                     <NewsCard key={i} news={null} />
                   ))
-                : visiblePosts.map((news: any, index: number) => (
+                : visiblePosts.map((news: NewsItem, index: number) => (
                     <NewsCard key={index} news={news} />
                   ))}
-              {visibleCount < (allPosts?.data?.posts?.length ?? 0) && (
+              {visibleCount < (data?.length ?? 0) && (
                 <div className="min-w-[200px] h-[320px] flex justify-center items-center">
                   <Button
                     onClick={() => setVisibleCount((prev) => prev + 10)}
